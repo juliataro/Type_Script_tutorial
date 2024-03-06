@@ -3,10 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TypeScript Tutorial</title>
+    <title>Weather application</title>
+
+    <script
+      src="https://kit.fontawesome.com/9f2969dfff.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/style/style.css" />
   </head>
   <body>
-    <h1>TypeScript Tutorial</h1>
+    <h1>Hello, Developer!</h1>
+
+    <div class="container">
+      <!-- header -->
+      <div class="header">
+        <div class="search-box">
+          <input
+            class="search-box"
+            type="text"
+            placeholder="Enter your location"
+          />
+          <button
+            type="button"
+            class="fa-solid fa-magnifying-glass"
+            id="searchBtn"
+          ></button>
+        </div>
+      </div>
+
+      <!-- main -->
+      <div class="location-not-found">
+        <h1>Sorry, Location is not found!!!</h1>
+        <img src="/images/404.png" alt="400 Error" />
+      </div>
+      <div>
+        <!-- Weather body -->
+        <div class="weather-body">
+          <img
+            src="/images/cloud.png"
+            alt="Weather Image"
+            class="weather-img"
+          />
+          <!-- weather box -->
+          <div class="weather-box">
+            <p class="temeprature">0<sup>°C</sup></p>
+            <p class="description">light rain</pс>
+          </div>
+          <!-- weather details -->
+          <div class="weather-details">
+            <div class="humidity">
+              <i class="fa-solid fa-droplet"></i>
+              <div class="text"><span id="humidity">45%</span></div>
+              <p>Humidity</p>
+            </div>
+
+            <div class="wind">
+              <i class="fa-solid fa-wind"></i>
+               <div class="text"><span id="wind-speed">12 km/h</span></div>
+              <p>Wind Speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="/js/app.js"></script>
   </body>

@@ -1,114 +1,64 @@
 "use strict";
-// // Variable Declaration
-// // 1. Explicitly declare
-// let num2: number = 11;
-// // 2. Infer type declaration
-// let num1 = 10;
-// let email = "julia.taro@gmail.com";
-////////////////////////////////////////////////////////////////
-// // Basic types
-// let isShopOpen: boolean = false;
-// let isGoing = true;
-// console.log(isGoing);
-// // Array
-// let myArray = [1, 2, 3, 4, 5, 6];
-// console.log(myArray);
-// // Object
-// let obj: { key: string; value: number } = {
-//   key: "name",
-//   value: 12,
-// };
-// console.log(obj);
-////////////////////////////////////////////////////////////////
-// // Functions
-// function add(x: number, y: number) {
-//   return x + y;
-// }
-// let result: number = add(10, 20);
-// console.log("The total is", result);
-// // Create a interface of the object
-// let person = { name: "John", age: 21, email: "midagi.taro@gmail.com" };
-// // Interface of an object
-// console.log("This is person: ", person.name);
-// console.log(person.age);
-// console.log(person.email);
-////////////////////////////////////////////////////////////////
-// // Create interface
-// interface Person {
-//   name: string;
-//   age: number;
-// }
-// // functions for the interface
-// let greet = (person: Person) => {
-//   return `Hello ${person.name}, nice to meet you!`;
-// };
-// let user: Person = { name: "John", age: 21 };
-// let user2: Person = { name: "Emily", age: 23 };
-// console.log(greet(user));
-// console.log(greet(user2));
-////////////////////////////////////////////////////////////////
-// Classes
-// class Animal {
-//   constructor(public name: string, public age: number) {
-//     this.name = name;
-//     this.age = age;
-//   }
-//   makeSound(): string {
-//     return `This is the generic sound of ${this.name}`;
-//   }
-// }
-// // extended a class
-// class Dog extends Animal {
-//   makeSound(): string {
-//     return `This is my dog ${this.name} and age is ${this.age} and he makes a sound Woof! Woof!`;
-//   }
-// }
-// // extended a class
-// class Cat extends Animal {
-//   makeSound(): string {
-//     return `This is my cat ${this.name} he makes a sound Meow! Meow!`;
-//   }
-// }
-// // Define an interface
-// let myDog = new Dog("Rex", 2);
-// console.log(myDog.makeSound());
-// let myCat = new Cat("Luna", 3);
-// console.log(myCat.makeSound());
-////////////////////////////////////////////////////////////////
-// console.log("Hello TypeScript!");
-// // Numeric Enums: start from 0, every time is's increasing by 1
-// enum DayOfWeek {
-//   Monday, // 0
-//   Tuesday, // 1
-//   Wednesday, // 2
-//   Thursday, // 3
-//   Friday, // 4
-//   Saturday, //
-//   Sunday, // 6
-// }
-// console.log(DayOfWeek.Monday);
-// console.log(DayOfWeek.Tuesday);
-// console.log("Wednesday is", DayOfWeek.Wednesday + 1, "-d day of the week");
-// // 2. String Enum:
-// enum FileType {
-//   PDF = "PDF",
-//   DOC = "DOC",
-//   DOCX = "DOCX",
-//   PPT = "PPT",
-//   PPTX = "PPTX",
-// }
-// console.log(FileType.PDF);
-////////////////////////////////////////////////////////////////
-// Generics: for reusable components of classes - there is no need to define types of args
-function identity(arg) {
-    return arg;
+// interface for weather Data
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+// defining query parameters
+const inputBox = document.querySelector(".search-box");
+const searchBtn = document.querySelector(".searchBtn");
+const weatherBody = document.querySelector(".weather-body");
+const weatherImg = document.querySelector(".weather-img");
+const temperature = document.querySelector(".temperature");
+const description = document.querySelector(".description");
+const humidity = document.getElementById("humidity");
+const windSpeed = document.getElementById("wind-speed");
+const locationNotFound = document.querySelector(".location-not-found");
+//function to get weather data
+function checkWeather(city) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const apiKey = "017127c0c2e8c4681e1ffb73a76d7d31";
+            const url = `https://api.openweathermap.org/data/3.0/onecall?q=${city}&appid=${apiKey}`;
+            const response = yield fetch(url);
+            const WeatherData = yield response.json();
+            if (WeatherData.cod === "400") {
+                handleNotFoundError();
+                return;
+            }
+            displayWeatherInfo(WeatherData);
+        }
+        catch (error) {
+            console.log("Error: ", error);
+        }
+    });
 }
-let output = identity("Hello !");
-let output2 = identity(12);
-console.log(output);
-console.log(output2);
-// Modules:
-function add(x, y) {
-    return x + y;
+//functions handleNotFoundError
+function handleNotFoundError() {
+    locationNotFound.style.display = "flex";
+    weatherBody.style.display = "none";
+    console.log("Error: City not found or API request failed");
 }
-console.log(add(10, 20));
+// displayWeatherData function
+function displayWeatherInfo(weatherData) {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+    console.log("WeatherData: ", weatherData);
+    locationNotFound.style.display = "none";
+    weatherBody.style.display = "flex";
+    // if the first data is found -> display other wise is nothing to display
+    const temperatureValue = (_b = (_a = weatherData.main) === null || _a === void 0 ? void 0 : _a.temp) !== null && _b !== void 0 ? _b : null;
+    const descriptionValue = (_d = (_c = weatherData.weather) === null || _c === void 0 ? void 0 : _c.description) !== null && _d !== void 0 ? _d : null;
+    const humidityValue = (_f = (_e = weatherData.main) === null || _e === void 0 ? void 0 : _e.humidity) !== null && _f !== void 0 ? _f : null;
+    const windSpeedValue = (_h = (_g = weatherData.wind) === null || _g === void 0 ? void 0 : _g.speed) !== null && _h !== void 0 ? _h : null;
+    temperature.innerHTML = temperatureValue
+        ? `${Math.round(temperatureValue - 273.15)} °C`
+        : "";
+    description.innerHTML = descriptionValue || "";
+    humidity.innerHTML = humidityValue !== null ? `${humidityValue} %` : "";
+    windSpeed.innerHTML = windSpeedValue !== null ? `${windSpeedValue} Km/h` : "";
+}
